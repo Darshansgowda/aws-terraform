@@ -19,32 +19,32 @@ pipeline {
 
         stage('Plan') {
             steps {
-                sh 'pwd;cd aws-terraform ; terraform init'
-                sh "pwd;cd aws-terraform ; terraform plan -out tfplan"
-                sh 'pwd;cd aws-terraform ; terraform show -no-color tfplan > tfplan.txt'
+                sh 'pwd;cd aws-terraform/ ; terraform init'
+                // sh 'pwd;cd aws-terraform/ ; terraform plan -out tfplan'
+                // sh 'pwd;cd aws-terraform/ ; terraform show -no-color tfplan > tfplan.txt'
             }
         }
-        stage('Approval') {
-           when {
-               not {
-                   equals expected: true, actual: params.autoApprove
-               }
-           }
+    //     stage('Approval') {
+    //        when {
+    //            not {
+    //                equals expected: true, actual: params.autoApprove
+    //            }
+    //        }
 
-           steps {
-               script {
-                    def plan = readFile 'aws-terraform/tfplan.txt'
-                    input message: "Do you want to apply the plan?",
-                    parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
-               }
-           }
-       }
+    //        steps {
+    //            script {
+    //                 def plan = readFile 'aws-terraform/tfplan.txt'
+    //                 input message: "Do you want to apply the plan?",
+    //                 parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
+    //            }
+    //        }
+    //    }
 
-        stage('Apply') {
-            steps {
-                sh "pwd;cd terraform/ ; terraform apply -input=false tfplan"
-            }
-        }
+        // stage('Apply') {
+        //     steps {
+        //         sh "pwd;cd terraform/ ; terraform apply -input=false tfplan"
+        //     }
+        // }
     }
 
   }
