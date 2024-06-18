@@ -1,12 +1,7 @@
-#Declarative Pipeline code(groovy script)
-
 pipeline {
-#display name: if true Automatically apply
     parameters {
         booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
     }
-#name of the environment(AWS,GCP)
-
     environment {
         AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
