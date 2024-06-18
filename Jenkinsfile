@@ -19,8 +19,7 @@ pipeline {
 
         stage('Plan') {
             steps {
-                sh 'pwd'
-                sh 'pwd;cd terraform/ ; terraform init'
+                sh 'pwd ; terraform init'
                 // sh 'pwd;cd aws-terraform/ ; terraform plan -out tfplan'
                 // sh 'pwd;cd aws-terraform/ ; terraform show -no-color tfplan > tfplan.txt'
             }
