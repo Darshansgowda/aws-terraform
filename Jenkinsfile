@@ -12,17 +12,20 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                        git branch: 'main',
-                            url: "https://github.com/Darshansgowda/aws-terraform.git"
-                  }
-        }
+                 script{
+                        dir("terraform")
+                        {
+                            git "https://github.com/Darshansgowda/aws-terraform.git"
+                        }
+                    }
+                }
+            }
 
         stage('Plan') {
             steps {
-                sh 'ls'
-                sh 'pwd; terraform init'
-                sh 'pwd; terraform plan -out tfplan'
-                sh 'pwd; terraform show -no-color tfplan > tfplan.txt'
+                sh 'pwd;cd terraform/ ; terraform init'
+                sh 'pwd;cd terraform/ ; terraform plan -out tfplan'
+                sh 'pwd;cd terraform/ ; terraform show -no-color tfplan > tfplan.txt'
             }
         }
         stage('Approval') {
@@ -34,7 +37,7 @@ pipeline {
 
            steps {
                script {
-                    def plan = readFile 'tfplan.txt'
+                    def plan = readFile 'terraform/tfplan.txt'
                     input message: "Do you want to apply the plan?",
                     parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
                }
