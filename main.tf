@@ -23,8 +23,3 @@ resource "aws_kms_key" "kms-key" {
   description             = "key"
   deletion_window_in_days = 7
 }
-
-resource "aws_ecs_cluster" "aws-ecs" {
-  name = "aws-ecs-cluster"
-
-}
