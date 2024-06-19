@@ -24,17 +24,7 @@ resource "aws_kms_key" "kms-key" {
   deletion_window_in_days = 7
 }
 
-resource "aws_cloudwatch_log_group" "example" {
-  name = "example"
-}
-
 resource "aws_ecs_cluster" "aws-ecs" {
   name = "aws-ecs-cluster"
 
-  configuration {
-    execute_command_configuration {
-      kms_key_id = aws_kms_key.example.arn
-      logging    = "OVERRIDE"
-    }
-  }
 }
